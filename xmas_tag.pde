@@ -10,7 +10,12 @@
  */
 
 import SimpleOpenNI.*;
+import ddf.minim.*;
 
+// Audio variables
+Minim minim;
+AudioSample jingleBells;
+int lastTrigger;
 
 // Kinect variables
 SimpleOpenNI  context;
@@ -47,6 +52,12 @@ void setup()
   {
     hitAreas[i] = new ClickedQuad();
   }
+  
+  // load sound file from the data folder
+  minim = new Minim(this);
+  jingleBells = minim.loadSample( "jingle-bells.wav");
+  
+  lastTrigger = millis();
 }
 
 
@@ -88,6 +99,10 @@ void draw()
         if ( hitAreas[j].withinQuad( pixX, pixY, depthMap[i] ) )
         {
           fill(255, 20, 20, 100);
+          if (( millis() - lastTrigger) > 1000 ){
+            jingleBells.trigger();
+            lastTrigger = millis();
+          }
         }
       }
     }
