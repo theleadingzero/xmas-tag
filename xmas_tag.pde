@@ -14,7 +14,7 @@ import ddf.minim.*;
 
 // Audio variables
 Minim minim;
-AudioSample jingleBells;
+AudioSample weWish1, happyNewYear;
 int lastTrigger;
 
 // Kinect variables
@@ -55,7 +55,8 @@ void setup()
   
   // load sound file from the data folder
   minim = new Minim(this);
-  jingleBells = minim.loadSample( "jingle-bells.wav");
+  weWish1 = minim.loadSample( "we_wish1.wav");
+  happyNewYear = minim.loadSample( "happy_new_year.wav");
   
   lastTrigger = millis();
 }
@@ -99,8 +100,14 @@ void draw()
         if ( hitAreas[j].withinQuad( pixX, pixY, depthMap[i] ) )
         {
           fill(255, 20, 20, 100);
-          if (( millis() - lastTrigger) > 1000 ){
-            jingleBells.trigger();
+          if (( millis() - lastTrigger) > 2000 ){
+            
+            if( j==0 ) {
+              weWish1.trigger();
+            }
+            if( j==1 ){
+              happyNewYear.trigger();
+            }
             lastTrigger = millis();
           }
         }
