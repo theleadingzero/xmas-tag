@@ -14,7 +14,7 @@ import ddf.minim.*;
 
 // Audio variables
 Minim minim;
-AudioSample weWish1, happyNewYear;
+AudioSample weWish1, weWish2, weWish3, happyNewYear;
 int lastTrigger;
 
 // Kinect variables
@@ -56,6 +56,8 @@ void setup()
   // load sound file from the data folder
   minim = new Minim(this);
   weWish1 = minim.loadSample( "we_wish1.wav");
+  weWish2 = minim.loadSample( "we_wish2.wav");
+  weWish3 = minim.loadSample( "we_wish3.wav");
   happyNewYear = minim.loadSample( "happy_new_year.wav");
   
   lastTrigger = millis();
@@ -88,6 +90,11 @@ void draw()
   boolean pointHit = false;
   int sw = context.sceneWidth();
   int sh = context.sceneHeight();
+  
+  for (int i=0; i<numHitAreas; i++)
+  {
+    hitAreas[i].drawQuad();
+  }
 
   // check if pixel value at point is occupied by a user
   for ( int i=0; i< ( sw * sh); i++) {
@@ -104,22 +111,26 @@ void draw()
             
             if( j==0 ) {
               weWish1.trigger();
+              hitAreas[j].drawQuad();
             }
             if( j==1 ){
+              weWish2.trigger();
+              hitAreas[j].drawQuad();
+            }
+            if( j==2 ){
+              weWish3.trigger();
+              hitAreas[j].drawQuad();
+            }
+            
+            if( j==3 ){
               happyNewYear.trigger();
+              hitAreas[j].drawQuad();
             }
             lastTrigger = millis();
           }
         }
       }
     }
-  }
-
-
-
-  for (int i=0; i<numHitAreas; i++)
-  {
-    hitAreas[i].drawQuad();
   }
 }
 
